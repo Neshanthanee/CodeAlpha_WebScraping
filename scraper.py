@@ -32,22 +32,21 @@ for page_num in range(1, 51):
             book_price = price_element.text.strip()
         except AttributeError:
             book_price = "Price Not Found"
-        
-        # --- C. Extract Star Rating ---
+       
         try:
             rating_element = book.find("p", class_="star-rating")
             star_rating = rating_element.get('class')[1] + " Stars" # Gets the second class name (e.g., 'Three')
         except (AttributeError, IndexError):
             star_rating = "Rating Not Found"
         
-        # --- D. Check Stock ---
+     
         try:
             stock_element = book.find("p", class_="instock availability")
             stock_status = stock_element.text.strip() 
         except AttributeError:
             stock_status = "Stock Not Found"
 
-        # --- E. Collect the data to the main list ---
+       
         book_data_list.append({
             'Title': book_title,
             'Price': book_price,
@@ -55,14 +54,10 @@ for page_num in range(1, 51):
             'Stock Status': stock_status
         })
         
-    # Ethical Scraping: Wait for a short time after processing each page
     time.sleep(1) 
 
-
-# 4. Convert to Dataset and Save (Code-oda very last-la irukkanum)
 if book_data_list:
     df = pd.DataFrame(book_data_list)
-    # Save the final table as a CSV file with a new name
     df.to_csv("All_Books_Scraped_Dataset.csv", index=False) 
 
     print("\n\n####################################")
@@ -73,37 +68,24 @@ if book_data_list:
 else:
     print("\n--- Warning ---")
     print("No book data was extracted. Please check your setup and network.")
-    # ... (after the main 50 page loop ends, before saving to CSV)
-
-# 4. Convert to Dataset
 if book_data_list:
     df = pd.DataFrame(book_data_list)
     
     print("\nStarting Data Cleaning...")
-    
-    # --- Cleaning Step 1: Clean Price Column ---
-    # The Price is stored as '£51.77'. Remove '£' and convert to float (number)
     try:
         df['Price (GBP)'] = df['Price'].str.replace('£', '').astype(float)
         df.drop('Price', axis=1, inplace=True) # Old 'Price' column-a delete pannidalam
     except Exception:
         print("Warning: Price cleaning failed.")
-        
-    # --- Cleaning Step 2: Clean Rating Column (Converting text to number) ---
-    # The Rating is stored as 'One Stars', 'Two Stars', etc.
     rating_map = {'One Stars': 1, 'Two Stars': 2, 'Three Stars': 3, 'Four Stars': 4, 'Five Stars': 5}
     try:
         df['Star Rating'] = df['Rating'].replace(rating_map).astype(int)
-        df.drop('Rating', axis=1, inplace=True) # Old 'Rating' column-a delete pannidalam
+        df.drop('Rating', axis=1, inplace=True)
     except Exception:
         print("Warning: Rating cleaning failed.")
-
-    # Save the cleaned data to CSV
     df.to_csv("Cleaned_Scraped_Book_Data.csv", index=False) 
 
     print("\n\n####################################")
     print("TASK 1 COMPLETED AND CLEANED!")
-    print(f"Final Cleaned Dataset saved as: Cleaned_Scraped_Book_Data.csv")
+    print(f"Final Cleaned Dataset saved as: Data.csv")
     print("####################################")
-    
-# ... (rest of the code)
