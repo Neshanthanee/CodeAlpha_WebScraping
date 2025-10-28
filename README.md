@@ -4,15 +4,11 @@
 This project is a simple web scraping script built using Python.  
 It extracts structured data from a website and stores it into a CSV file ("output.csv").
 
----
-
 ⚙️ Files in This Repository
 | File Name | Description |
 |------------|--------------|
 |scraper.py| The main Python script that performs web scraping and writes the results to a CSV file. |
 |output.csv| The generated output file containing the scraped data in a tabular format. |
-
----
 
 🚀 How It Works
 1. The "scraper.py" script sends a request to a target website.  
