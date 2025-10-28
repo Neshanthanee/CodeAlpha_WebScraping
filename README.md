@@ -17,13 +17,8 @@ It extracts structured data from a website and stores it into a CSV file ("outpu
 
 🧩 How to Run the Script
 Step 1: Clone this repository
-git clone https://github.com/<your-username>/<your-repo-name>.git
-
 Step 2: Move into the project folder
-cd <your-repo-name>
-
 Step 3: Install dependencies (if any)
 pip install -r requirements.txt
-
-# Step 4: Run the scraper
+Step 4: Run the scraper
 python scraper.py
